@@ -1,17 +1,20 @@
 class Solution {
-    public int f(int i , int j , String a , String b , int dp [][]){
-        if(i>=a.length() || j>=b.length())
-            return 0;
-        if(dp[i][j] !=-1) return dp[i][j];
-        if(a.charAt(i) == b.charAt(j))
-            return dp[i][j] = f(i+1 , j+1 , a, b, dp  )+1;
-        else
-            return dp[i][j] = Math.max(f(i+1 , j , a, b ,dp ) , f(i , j+1 , a,b, dp  ));
-    }
     public int longestCommonSubsequence(String text1, String text2) {
-        int dp[][] = new int[text1.length()][text2.length()];
+        int dp[][] = new int[text1.length()+1][text2.length()+1];
         for(int i [] : dp)
-            Arrays.fill(i , -1 );
-        return f(0,0,text1,text2 ,dp);
+            Arrays.fill(i , 0 );
+        String a = text1;
+        String b = text2;
+        for(int i =1 ; i <a.length()+1 ; i++){
+            for(int j=1 ; j< b.length()+1 ; j++){
+                if(a.charAt(i-1) == b.charAt(j-1)){
+                    dp[i][j] = dp[i-1][j-1]+1;
+                }
+                else{
+                    dp[i][j] = Math.max(dp[i][j-1] , dp[i-1][j]);
+                }
+            }
+        }
+        return dp[dp.length-1][dp[0].length-1];
     }
 }
