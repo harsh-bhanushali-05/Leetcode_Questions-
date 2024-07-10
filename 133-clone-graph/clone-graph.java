@@ -33,10 +33,12 @@ class Solution {
         vis.add(node);
         for(Node nbr : node.neighbors){
             map.get(node).neighbors.add(map.get(nbr));
-        }
-        for(Node nbr : node.neighbors){
             link(nbr , map , vis);
+
         }
+        // for(Node nbr : node.neighbors){
+            // link(nbr , map , vis);
+        // }
     }
     public Node cloneGraph(Node node) {
         if(node == null)return node;
