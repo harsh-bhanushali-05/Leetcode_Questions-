@@ -33,7 +33,7 @@ class Solution {
         while(pq.isEmpty()==false){
             pair temp = pq.poll();
             for(pair p : map.get(temp.node)){
-                int totalwt = temp.wt + p.wt;
+                int totalwt = dist[temp.node] + p.wt;
                 if(dist[p.node] > totalwt){
                     dist[p.node] = totalwt;
                     pq.offer(new pair( p.node , totalwt));
