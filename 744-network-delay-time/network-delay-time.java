@@ -28,15 +28,15 @@ class Solution {
             map.get(times[i][0]).add(new pair(times[i][1] , times[i][2]));
         }
         dist[k]=0;
-        PriorityQueue<pair> pq = new PriorityQueue<>((a,b)->a.wt-b.wt);
-        pq.offer(new pair(k,0));
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        pq.offer(k);
         while(pq.isEmpty()==false){
-            pair temp = pq.poll();
-            for(pair p : map.get(temp.node)){
-                int totalwt = dist[temp.node] + p.wt;
+            int temp = pq.poll();
+            for(pair p : map.get(temp)){
+                int totalwt = dist[temp] + p.wt;
                 if(dist[p.node] > totalwt){
                     dist[p.node] = totalwt;
-                    pq.offer(new pair( p.node , totalwt));
+                    pq.offer(p.node);
                 }
             }
         }
