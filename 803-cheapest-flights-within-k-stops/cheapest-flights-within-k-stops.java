@@ -25,7 +25,7 @@ class Solution {
         for(int i = 0 ; i < flights.length ; i++){
             map.get(flights[i][0]).add(new pair(flights[i][1] , flights[i][2]));
         }
-        PriorityQueue<tuple> pq = new PriorityQueue<>((a,b)->a.stops-b.stops);
+        Queue<tuple> pq = new ArrayDeque<>();
         int dist[] = new int[n];
         Arrays.fill(dist , (int) 1e9);
         dist[src] = 0;
