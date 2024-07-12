@@ -1,30 +1,24 @@
 import java.util.*;
 
 class Solution {
+    public void dfs(String node, Map<String, List<String>> adj, List<String> ans) {
+        Collections.sort(adj.getOrDefault(node , new ArrayList<>()), Collections.reverseOrder());
+        while (adj.containsKey(node) && !adj.get(node).isEmpty()) {
+            String temp = adj.get(node).remove(adj.get(node).size() - 1);
+            dfs(temp, adj, ans);
+        }
+        ans.add(node);
+    }
+
     public List<String> findItinerary(List<List<String>> tickets) {
-        // Map to store the adjacency list
-        HashMap<String, PriorityQueue<String>> map = new HashMap<>();
-        
-        // Build the graph
+        Map<String, List<String>> adj = new HashMap<>();
         for (List<String> ticket : tickets) {
-            map.putIfAbsent(ticket.get(0), new PriorityQueue<>());
-            map.get(ticket.get(0)).offer(ticket.get(1));
+            adj.putIfAbsent(ticket.get(0), new ArrayList<>());
+            adj.get(ticket.get(0)).add(ticket.get(1));
         }
-        
-        List<String> result = new LinkedList<>();
-        Stack<String> stack = new Stack<>();
-        stack.push("JFK");
-        
-        // Use iterative DFS to construct the path
-        while (!stack.isEmpty()) {
-            String node = stack.peek();
-            if (map.containsKey(node) && !map.get(node).isEmpty()) {
-                stack.push(map.get(node).poll());
-            } else {
-                result.add(0, stack.pop());
-            }
-        }
-        
-        return result;
+        List<String> ans = new ArrayList<>();
+        dfs("JFK", adj, ans);
+        Collections.reverse(ans);
+        return ans;
     }
 }
