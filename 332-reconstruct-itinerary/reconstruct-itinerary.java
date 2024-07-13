@@ -1,7 +1,7 @@
 class Solution {
     public void dfs(String node, Map<String, List<String>> adj, List<String> ans) {
         Collections.sort(adj.getOrDefault(node , new ArrayList<>()), Collections.reverseOrder());
-        while (adj.containsKey(node) && !adj.get(node).isEmpty()) {
+        while (!adj.getOrDefault(node, new ArrayList<>()).isEmpty()) {
             String temp = adj.get(node).remove(adj.get(node).size() - 1);
             dfs(temp, adj, ans);
         }
