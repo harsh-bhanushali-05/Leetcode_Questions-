@@ -1,19 +1,19 @@
 class Solution {
     List<List<Integer>> ans = new ArrayList<>();
-    public void f(int nums[] , int i , List<Integer> list ){
-        if(i==nums.length){
+    public void f(List<Integer> list , int i , int arr[] ){
+        if(i == arr.length ){
             ans.add(new ArrayList<>(list));
             return;
         }
-        // Take 
-        list.add(nums[i]);
-        f(nums , i+1 , list);
-        // Not Take 
+        // take 
+        list.add(arr[i]);
+        f(list, i+1 , arr);
+        // not take 
         list.remove(list.size()-1);
-        f(nums , i+1 , list);
+        f(list , i+1 , arr);
     }
     public List<List<Integer>> subsets(int[] nums) {
-        f(nums , 0 , new ArrayList<>());
+        f(new ArrayList<>(), 0 , nums);
         return ans;
     }
 }
