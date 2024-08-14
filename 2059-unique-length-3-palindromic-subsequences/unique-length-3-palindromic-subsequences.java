@@ -1,26 +1,24 @@
 class Solution {
-    public void addStrings(String s , int i , int j , HashSet<String> set){
-        for(int e=i+1;e<j;e++){
-            String a= s.charAt(i)+""+s.charAt(e)+""+s.charAt(j);
-            set.add(a);
-        }
-    }
     public int countPalindromicSubsequence(String s) {
-        int i  = 0;
-        int j =s.length()-1;
-        HashSet < String > set =new HashSet<>();
-        HashSet<Character> done = new HashSet<>();
-        for(i = 0; i<s.length();i++){
-            while(i<j && done.contains(s.charAt(i))==false){
-                if(s.charAt(i)==s.charAt(j)){
-                    addStrings(s,i,j,set);
-                    break;
+        HashSet<Character> set = new HashSet<>();
+        int ans = 0 ;
+        for(int i = 0 ; i < s.length() ; i++){
+            int j = s.length()-1;
+            while(i<j && set.contains(s.charAt(i)) == false ){
+                if(s.charAt(i) == s.charAt(j) && set.contains(s.charAt(i)) == false){
+                    HashSet<Character> done = new HashSet<>();
+                    for(int k = i+1 ; k < j ; k++){
+                        if(done.contains(s.charAt(k)) == false){
+                            done.add(s.charAt(k));
+                            ans++;
+                        }
+                        done.add(s.charAt(k));
+                    }
+                    set.add(s.charAt(i));
                 }
                 j--;
             }
-            done.add(s.charAt(i));
-            j=s.length()-1;
         }
-        return set.size();
+        return ans;
     }
 }
