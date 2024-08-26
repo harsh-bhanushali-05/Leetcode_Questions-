@@ -3,7 +3,6 @@ class Solution {
         if (head == null || head.next == null) {
             return head;  // If there's only one node or no node, return the list as it is.
         }
-
         ListNode prev = new ListNode(-1);  // Dummy node to simplify operations
         ListNode ret = prev;
         
@@ -15,8 +14,6 @@ class Solution {
             next.next = curr;
             curr.next = next_head;
             prev = curr;
-            
-            // Move head to the next pair
             head = next_head;
         }
         
