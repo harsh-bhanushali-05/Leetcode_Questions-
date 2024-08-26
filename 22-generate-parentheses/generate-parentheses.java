@@ -1,21 +1,19 @@
 class Solution {
-    public void f(int n , int o , String curr , List<String> ans){
-        if(n==0){
+    List<String> ans = new ArrayList<>();
+    public void f(int n , String curr , int open , int close ){
+        if( n == close ){
             ans.add(curr);
             return;
         }
-        if(o<n){
-            // open a bracket
-            f(n , o+1 , curr+"(" , ans);
+        if(open < n ){
+            f(n , curr+"(" , open+1 , close);
         }
-        if(o >0){
-            // we can close as well
-            f(n-1 , o-1 , curr+")" , ans);
+        if(open > close ){
+            f(n , curr+")" , open , close+1);
         }
     }
     public List<String> generateParenthesis(int n) {
-        List<String> list = new ArrayList<>();
-        f(n , 0 , "" , list);
-        return list;
+        f(n , "" , 0 , 0 );
+        return ans;
     }
 }
