@@ -5,7 +5,7 @@ class Solution {
         int  i  = Integer.MAX_VALUE;
         int  j  = Integer.MAX_VALUE;
         for(int curr  : nums ){
-            if(i >=curr){
+            if(i == Integer.MAX_VALUE){
                 i = curr;
             }
             else if( curr > i && j == Integer.MAX_VALUE){
@@ -14,7 +14,7 @@ class Solution {
             else if(curr > j){
                 return true;
             }
-            else if(curr < i && j == Integer.MAX_VALUE){
+            else if(curr < i ){
                 i = curr;
             }
             else if( i < curr && curr < j){
