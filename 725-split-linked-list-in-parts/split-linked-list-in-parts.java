@@ -13,51 +13,38 @@ class Solution {
         ListNode curr = head;
         int ans = 0 ;
         while(curr!=null){
+            curr=curr.next;
             ans++;
-            curr= curr.next;
         }
-        return ans ;
+        return ans;
     }
     public ListNode[] splitListToParts(ListNode head, int k) {
-        // we need to split the Linked list into k. 
-        // we have length of 6 assume -> k = 3 then 2 each if len < k give 1 to each of the node 
-        ListNode [] arr = new ListNode[k];
-        for(int i = 0; i < k ; i++){
-            arr[i] = new ListNode(-1);
-        }
-        int length = len(head);
-        if(length <= k){
-            // we are giving each value in the num 1 element 
-            for(int i = 0 ; i < k ; i++){
-                if(head!=null){
-                    arr[i].next = new ListNode(head.val);
-                    head = head.next;
-                }
-                arr[i] = arr[i].next;
+        ListNode[] ans = new ListNode[k];
+        int l = len(head);
+        int index = 0;
+        while(head!=null){
+            int size = l/k;
+            if(((float)l / (float)k)%1!=0){
+                size++;
             }
-            return arr;
-        }
-        else{
-            int index = 0;
-            int each =(length / k ); 
-            for(int i = 0; i < k ; i++){
-                int s = each;
-                ListNode curr = arr[i];
-                if(length %k != 0 ){
-                    s++;
-                    length--;
+            ListNode curr = new ListNode(-1);
+            for(int i = 0 ; i < size ; i++){
+                if(head == null)break;
+                if(i == 0 ){
+                    ans[index] = new ListNode(head.val);
+                    head = head.next;
+                    curr = ans[index];
                 }
-                while(s-->0 && head!=null){
+                else{
                     curr.next = new ListNode(head.val);
-                    head = head.next;
                     curr = curr.next;
-                    index++;
+                    head = head.next;
                 }
             }
-            for(int i = 0 ; i < k ; i++){
-                arr[i] = arr[i].next;
-            }
+            index++;
+            l-=size;
+            k--;
         }
-        return arr; 
+        return ans;
     }
 }
