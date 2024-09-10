@@ -1,25 +1,18 @@
 class Solution {
     public boolean increasingTriplet(int[] nums) {
-        // int i , j , k -> i , j , k update. 
-        // 1,2,3 -> if(curr < i ) update i if j is not filled 
-        int  i  = Integer.MAX_VALUE;
-        int  j  = Integer.MAX_VALUE;
-        for(int curr  : nums ){
-            if(i == Integer.MAX_VALUE){
-                i = curr;
+        // find the increasing triplet 
+        int i = Integer.MAX_VALUE;
+        int j = Integer.MAX_VALUE;
+        int index = 0;
+        while(index < nums.length){
+            if(i == Integer.MAX_VALUE || i > nums[index]){
+                i = nums[index];
             }
-            else if( curr > i && j == Integer.MAX_VALUE){
-                j = curr;
+            else if( i < nums[index] && j > nums[index]){
+                j = nums[index];
             }
-            else if(curr > j){
-                return true;
-            }
-            else if(curr < i ){
-                i = curr;
-            }
-            else if( i < curr && curr < j){
-                j = curr;
-            }
+            else if(nums[index] > j )return true;
+            index++;
         }
         return false;
     }
