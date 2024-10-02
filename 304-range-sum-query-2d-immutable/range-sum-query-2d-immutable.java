@@ -1,24 +1,32 @@
 class NumMatrix {
-    HashMap<Integer , List<Integer>> map;
+    int arr[][];
     public NumMatrix(int[][] matrix) {
-        map = new HashMap<>();
-        for(int i = 0 ; i < matrix.length ; i++){
-            for(int j = 0 ; j < matrix[0].length ; j++){
-                if(map.containsKey(i) == false){
-                    map.put(i , new ArrayList<>());
-                    map.get(i).add(0);
-                }
-                map.get(i).add(map.get(i).get(map.get(i).size()-1)+matrix[i][j]);
-            }   
+        arr = new int[matrix.length][matrix[0].length];
+        for(int i = 0 ; i < arr.length ; i++){
+            for(int j = 0; j < arr[0].length ; j++){
+                arr[i][j] = matrix[i][j];
+                if(i > 0 )arr[i][j]+=arr[i-1][j];
+                if(j > 0 )arr[i][j]+=arr[i][j-1];
+                if(i>0 && j>0) arr[i][j]-=arr[i-1][j-1]; 
+            }
         }
     }
     
     public int sumRegion(int row1, int col1, int row2, int col2) {
-        int sum = 0; 
-        for(int i = row1 ; i <= row2 ; i++){
-            sum+=(map.get(i).get(col2+1) - map.get(i).get(col1));
+        int ans = arr[row2][col2];
+        
+        if (row1 > 0) {
+            ans -= arr[row1 - 1][col2];
         }
-        return sum;
+        
+        if (col1 > 0) {
+            ans -= arr[row2][col1 - 1];
+        }
+        
+        if (row1 > 0 && col1 > 0) {
+            ans += arr[row1 - 1][col1 - 1];
+        }
+        return ans;
     }
 }
 
