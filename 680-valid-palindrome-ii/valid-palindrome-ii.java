@@ -1,16 +1,28 @@
 class Solution {
-    public boolean f(int i , int j , String s , int count ){
-        if(i == j )return true;
-        if(j < i )return true;
-        if(s.charAt(i) == s.charAt(j)){
-            return f(i+1 , j-1 , s , count );
-        }
-        else{
-            if(count == 1 )return false;
-            return f(i+1 , j , s , count+1) || f(i , j-1 , s , count +1);
-        }
-    }
     public boolean validPalindrome(String s) {
-        return f(0 , s.length()-1 , s , 0 );
+        int i = 0, j = s.length() - 1;
+
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) {
+                // If a mismatch is found, try skipping either the left or the right character
+                return isPalindrome(s, i + 1, j) || isPalindrome(s, i, j - 1);
+            }
+            i++;
+            j--;
+        }
+        
+        return true;
+    }
+    
+    // Helper function to check if a substring is a palindrome
+    private boolean isPalindrome(String s, int i, int j) {
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) {
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
     }
 }
