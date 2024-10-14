@@ -7,9 +7,7 @@ class Solution {
         while(j < nums.length){
             map.put(nums[j] , map.getOrDefault(nums[j] , 0 )+1);
             while(map.get(nums[j]) > k){
-                map.put(nums[i] , map.getOrDefault(nums[i] , 1 )-1 );
-                if(map.get(nums[i]) ==0)
-                    map.remove(nums[i]);
+                map.put(nums[i] , map.get(nums[i])-1 );
                 i++;
             }
             j++;
