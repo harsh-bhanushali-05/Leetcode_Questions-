@@ -3,7 +3,6 @@ class Solution {
         String arr[] = path.split("/");
         Stack<String> st = new Stack<>();
         for(String str :arr){
-            str=str.trim();
             if(str.equals("..")){
                 if(st.isEmpty()==false)
                     st.pop();
@@ -23,7 +22,6 @@ class Solution {
             str.insert(0 , "/"+st.pop());
         }
         String ret = str.toString();
-        ret = ret.trim();
         if(ret.equals(""))return "/";
         return ret;
     }
