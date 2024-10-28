@@ -9,7 +9,7 @@ class Solution {
                 i = mid+2;
             }
             else{
-                j = mid;
+                j = mid-1;
             }
         }
         return nums[i];
