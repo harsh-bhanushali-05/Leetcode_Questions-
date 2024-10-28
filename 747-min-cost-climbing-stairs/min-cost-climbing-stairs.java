@@ -17,5 +17,7 @@ class Solution {
         Arrays.fill(dp , -1 );
         int one = f(1 , cost , dp );
         return Math.min(zero , one );
+
+        // this is the memoization code 
     }
 }
