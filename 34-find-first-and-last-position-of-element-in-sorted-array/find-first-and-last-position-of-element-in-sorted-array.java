@@ -41,6 +41,10 @@ class Solution {
     public int[] searchRange(int[] nums, int target) {
         int arr[] = new int[2];
         arr[0] = left(nums , target );
+        if(arr[0] == -1 ){
+        arr[1]=-1;
+        return arr;
+        }
         arr[1] = right(nums , target );
         return arr;
     }
