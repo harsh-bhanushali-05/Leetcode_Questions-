@@ -20,23 +20,34 @@ class Node {
     }
 };
 */
-
 class Solution {
-    public void f(HashMap<Integer, List<Node>> map , Node root , int level){
-        if(root==null)return;
-        if(map.containsKey(level)==false)map.put(level , new ArrayList<>());
-        map.get(level).add(root);
-        f(map , root.left , level+1);
-        f(map, root.right , level+1);
-    }
     public Node connect(Node root) {
-        HashMap<Integer , List<Node>> map = new HashMap<>();
-        f(map , root , 1);
-        for(int i : map.keySet()){
-            for(int j = 0; j < map.get(i).size()-1 ; j++){
-                map.get(i).get(j).next = map.get(i).get(j+1);
-            }
+        if (root == null) {
+            return null;
         }
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            Node prev = null;
+            for (int i = 0; i < size; i++) {
+                Node curr = queue.poll();
+                if (prev != null) {
+                    prev.next = curr;
+                }
+                prev = curr;
+                if (curr.left != null) {
+                    queue.offer(curr.left);
+                }
+                if (curr.right != null) {
+                    queue.offer(curr.right);
+                }
+            }
+            prev.next = null;
+        }
+
         return root;
     }
 }
