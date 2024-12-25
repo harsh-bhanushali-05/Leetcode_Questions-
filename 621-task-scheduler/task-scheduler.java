@@ -1,35 +1,41 @@
 class Solution {
-    class task{
-        char val;
+    class Node{
+        char process;
         int freq; 
-        int time;
-        task(char val , int freq , int time ){
-            this.val = val;
-            this.freq = freq;
+        int time; 
+        Node(char process , int freq , int time ){
+            this.process = process;
             this.time = time;
+            this.freq = freq;
         }
     }
     public int leastInterval(char[] tasks, int n) {
-        HashMap<Character, Integer>  map = new HashMap<>();
-        for(char c : tasks)
-            map.put( c , map.getOrDefault(c,0)+1);
-        PriorityQueue<task> pq= new PriorityQueue<>((a,b)->a.time-b.time); // sort with smallest time first 
-        for(char c : map.keySet()){
-            task temp = new task(c , map.get(c) , 0 );
-            pq.offer(temp);
+        int time = 0;
+        HashMap<Character , Integer> map = new HashMap<>(); 
+        for(char c : tasks ){
+            map.put(c , map.getOrDefault(c , 0 )+1);
         }
-        for(int i = 0 ; ; i++){
-            if(pq.isEmpty()){
-                return i;
+        PriorityQueue<Node> pq = new PriorityQueue<>((a,b)-> a.time - b.time == 0 ? b.freq - a.freq : a.time-b.time);
+        for(char key : map.keySet()){
+            pq.offer(new Node(key , map.get(key) , 0 ));
+        }
+        int ans = 0 ;
+        while(true){
+            if(pq.size() == 0 ){
+                return ans;
             }
-            if(i<pq.peek().time)
+            Node curr = pq.peek(); 
+            if(curr.time > ans){
+                ans++;
                 continue;
-            task temp = pq.poll();
-            temp.freq-=1;
-            temp.time = temp.time+ n + 1;
-            if(temp.freq!=0){
-                pq.offer(temp);
             }
+            // we can process it right now 
+            pq.poll(); 
+            if(curr.freq > 1 ){
+                Node naya = new Node(curr.process , curr.freq -1 , curr.time + n + 1);
+                pq.offer(naya);
+            }
+            ans++;
         }
     }
 }
