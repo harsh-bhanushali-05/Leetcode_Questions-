@@ -8,24 +8,23 @@
  * }
  */
 class Solution {
-    public boolean f(TreeNode root , TreeNode find){
-        if(root==null)return false;
-        if(root == find){
-            return true;
-        }
-        return f(root.left , find)||f(root.right , find);
+    public boolean find(TreeNode root , TreeNode req ){
+        if(root == null )return false;
+        if(root == req )return true;
+        return find(root.left , req ) || find(root.right , req );
     }
-    TreeNode ans = null;
-    public void bfs(TreeNode root , TreeNode a , TreeNode b){
-        if(root == null)return;
-        if(f(root , a) && f(root , b)){
-            ans = root;
-        }
-        bfs(root.left , a ,b );
-        bfs(root.right ,a , b);
+    public TreeNode ret(TreeNode curr , TreeNode a , TreeNode b ){
+        if(curr == null)return null;
+        boolean one = find(curr , a );
+        boolean two = find(curr , b );
+        TreeNode left = ret(curr.left , a , b );
+        TreeNode right = ret(curr.right , a, b);
+        if(left!= null)return left;
+        if(right!=null)return right; 
+        if(one && two )return curr;
+        return null;
     }
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        bfs(root , p ,q );
-        return ans;
+        return ret(root , p , q );
     }
 }
