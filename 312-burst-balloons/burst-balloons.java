@@ -1,24 +1,27 @@
 class Solution {
-    public int f(int i , int j , int arr[], int dp[][]){
-        if(j< i)return 0 ;
-        if(dp[i][j]!=-1)return dp[i][j];
-        int ans = Integer.MIN_VALUE;
-        for(int last = i ; last<= j ; last++){
-            int cost = (arr[i-1] * arr[j+1] * arr[last]) + f(i , last-1 ,arr, dp )+f( last+1 , j , arr, dp );
-            ans = Math.max(ans , cost);
-        }
-        return dp[i][j] =  ans;
-    }
     public int maxCoins(int[] nums) {
-        int arr[] = new int[nums.length+2];
-        arr[0] = 1; 
-        arr[arr.length-1] = 1; 
-        for(int i = 0 ; i< nums.length ; i++){
-            arr[i+1] =nums[i];
+        int n = nums.length;
+        int[] arr = new int[n + 2]; // Include virtual balloons with value 1 at both ends
+        arr[0] = arr[n + 1] = 1;
+        for (int i = 0; i < n; i++) {
+            arr[i + 1] = nums[i];
         }
-        int dp[][] = new int[arr.length][arr.length];
-        for(int i[] : dp )
-            Arrays.fill(i , -1);
-        return f(1, nums.length , arr , dp );
+
+        int[][] dp = new int[n + 2][n + 2]; // DP table
+
+        // Fill the DP table
+        for (int length = 1; length <= n; length++) { // Range size
+            for (int i = 1; i <= n - length + 1; i++) { // Start of the range
+                int j = i + length - 1; // End of the range
+                for (int last = i; last <= j; last++) { // Last balloon to burst in range [i, j]
+                    int cost = arr[i - 1] * arr[last] * arr[j + 1]
+                            + dp[i][last - 1] // Coins from the left subarray
+                            + dp[last + 1][j]; // Coins from the right subarray
+                    dp[i][j] = Math.max(dp[i][j], cost);
+                }
+            }
+        }
+
+        return dp[1][n]; // Maximum coins for the range [1, n]
     }
 }
