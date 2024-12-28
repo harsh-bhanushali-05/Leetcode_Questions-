@@ -1,31 +1,30 @@
 class Solution {
-    public int f(int i , int arr[] , int k, int limit , int dp[][]){
-        if(i == arr.length)return 0;
-        if(dp[i][k]!=-1)return dp[i][k];
-        if(k < limit){
-            // we can still do the trade 
-            if(k%2==0){
-                // we can buy or leave 
-                int buy = f(i+1 , arr , k+1 , limit ,dp)- arr[i]; // we bought the current stock 
-                int leave = f(i +1 , arr , k , limit,dp);
-                return  dp[i][k] = Math.max(buy , leave );
-            }
-            else{
-                // we can either sell the stock or leave 
-                int sell = f(i+1 , arr , k+1 , limit ,dp) + arr[i]; 
-                int leave = f(i+1 , arr , k , limit , dp  );
-                return  dp[i][k] = Math.max(sell , leave );
-            }
-        }
-        else{
-            return 0;
-        }
-    }
     public int maxProfit(int k, int[] prices) {
         // even is buy odd is sell 
-        int dp[][] = new int[prices.length+1][k*2+1];
+        int dp[][] = new int[prices.length+1][(k*2)+1];
         for(int i[] : dp )
-            Arrays.fill(i , -1 );
-        return f(0 , prices , 0 , k*2 , dp);
+            Arrays.fill(i , 0);
+        int x = k;
+        for(int i = prices.length-1 ; i>=0 ; i--){
+            for( k = (x*2)-1 ; k >= 0 ; k--){
+                if(k%2==0){
+                    int buy = dp[i+1][k+1] - prices[i];
+                    int sell = dp[i+1][k];
+                    dp[i][k]= Math.max(buy , sell );
+                }
+                else{
+                    int buy = dp[i+1][k+1] + prices[i];
+                    int sell = dp[i+1][k];
+                    dp[i][k] = Math.max(buy , sell );
+                }
+            }
+        }
+        for(int i [] : dp ){
+            for(int j : i ){
+                System.out.print(j+ " ");
+            }
+            System.out.println();
+        }
+        return dp[0][0];
     }
 }
