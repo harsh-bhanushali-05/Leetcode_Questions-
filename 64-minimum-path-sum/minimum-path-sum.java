@@ -1,6 +1,6 @@
 class Solution {
     public int minPathSum(int[][] grid) {
-        int dp[][] = new int[grid.length+3][grid[0].length+3];
+        int dp[][] = new int[grid.length+1][grid[0].length+1];
         for(int i[] : dp){
             Arrays.fill(i , (int)1e9);
         }
