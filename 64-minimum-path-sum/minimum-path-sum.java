@@ -1,17 +1,16 @@
 class Solution {
-    public int f(int i , int j , int arr[][] , int dp[][]){
-        if(arr.length <= i || arr[0].length <= j )return (int)1e9; 
-        if(i == arr.length-1 && j == arr[0].length -1 )return dp[i][j] = arr[i][j];
-        if(dp[i][j]!=-1)return dp[i][j];
-        int right = f(i , j+1 , arr , dp);
-        int down = f(i+1 , j , arr , dp);
-        return dp[i][j] = Math.min(right , down )+arr[i][j];
-    }
     public int minPathSum(int[][] grid) {
-        int dp[][] = new int[grid.length][grid[0].length];
+        int dp[][] = new int[grid.length+3][grid[0].length+3];
         for(int i[] : dp){
-            Arrays.fill(i , -1);
+            Arrays.fill(i , (int)1e9);
         }
-        return f(0 , 0 , grid , dp);
+        dp[grid.length-1][grid[0].length-1] = grid[grid.length-1][grid[0].length-1];
+        for(int i = grid.length-1 ; i>=0 ; i--){
+            for(int j = grid[0].length-1 ; j>=0 ; j--){
+                if(i == grid.length-1 && j == grid[0].length-1)continue;
+                dp[i][j] = Math.min(dp[i][j+1] , dp[i+1][j]) + grid[i][j];
+            }
+        }
+        return dp[0][0];
     }
 }
