@@ -4,8 +4,8 @@ class Trie {
         boolean end; 
         Node(){
             child = new Node[26];
-            Arrays.fill(child , null );
-            end = false; 
+            // Arrays.fill(child , null );
+            // end = false; 
         }
     }
     Node root = new Node(); 
@@ -40,7 +40,7 @@ class Trie {
     }
     
     public boolean startsWith(String prefix) {
-         Node curr = root; 
+        Node curr = root; 
         for(int i = 0 ; i < prefix.length(); i++){
             if(curr.child[prefix.charAt(i)-'a'] == null){
                 return false;
