@@ -3,7 +3,7 @@ class Solution {
         int i = 0; 
         int j = a.length-1; 
         int ans = 0; 
-        while(i<=j){
+        while(i<j){
             ans = Math.max(Math.min(a[i],a[j])*(j-i) , ans );
             if(a[i]<a[j]){
                 i++;
