@@ -14,8 +14,15 @@ class Solution {
     }
     public int sumFourDivisors(int[] nums) {
         int ans = 0; 
+        HashMap<Integer , Integer > map = new HashMap<>(); 
         for(int i : nums){
-            ans+=f(i);
+            if(map.containsKey(i)){
+                ans+=map.get(i);
+                continue;
+            }
+            int curr = f(i); 
+            map.put(i , curr);
+            ans+=curr;
         }
         return ans;
     }
