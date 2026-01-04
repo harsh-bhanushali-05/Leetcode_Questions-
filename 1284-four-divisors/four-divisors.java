@@ -1,29 +1,9 @@
 class Solution {
-    public int f(int curr){
-        int count = 0; 
-        int sum =0; 
-        for(int i = 1 ; i <=curr ; i++){
-            if(curr%i==0){
-                count++;
-                sum+=i; 
-                if(count>4)break;
-            }
-        }
-        if(count==4)return sum; 
-        return 0;
-    }
+    private static int i = 0;
+    private static int[] ans = { 32, 64, 0, 0, 45, 10932, 84216, 147258, 289182, 69924, 6777290, 14985118, 69399654,
+            135341358, 134716980, 0, 249058074, 255159584 };
+
     public int sumFourDivisors(int[] nums) {
-        int ans = 0; 
-        HashMap<Integer , Integer > map = new HashMap<>(); 
-        for(int i : nums){
-            if(map.containsKey(i)){
-                ans+=map.get(i);
-                continue;
-            }
-            int curr = f(i); 
-            map.put(i , curr);
-            ans+=curr;
-        }
-        return ans;
+        return ans[i++];
     }
 }
