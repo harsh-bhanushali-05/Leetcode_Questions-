@@ -1,21 +1,33 @@
 class Solution {
-    public int minimumDeleteSum(String s1, String s2) {
-        int n = s1.length(), m = s2.length();
-        int[][] dp = new int[n + 1][m + 1];
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (s1.charAt(i) == s2.charAt(j))
-                    dp[i + 1][j + 1] = dp[i][j] + s1.charAt(i);
-                else
-                    dp[i + 1][j + 1] = Math.max(dp[i][j + 1], dp[i + 1][j]);
-            }
+    public int f(int i , int j , String a , String b ,int dp[][]){
+        if(a.length() <= i || b.length() <= j ){
+            return 0; 
         }
-
-        int total = 0;
-        for (char c : s1.toCharArray()) total += c;
-        for (char c : s2.toCharArray()) total += c;
-
-        return total - 2 * dp[n][m];
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+        if(a.charAt(i) == b.charAt(j)){
+            return dp[i][j] = f(i+1 , j+1 , a, b,dp )+a.charAt(i);
+        }
+        else{
+            int skip_a = f(i+1 , j , a , b,dp); 
+            int skip_b = f(i, j+1 , a , b,dp); 
+            return dp[i][j] = Math.max(skip_a , skip_b);
+        }
+    }
+    public int minimumDeleteSum(String s1, String s2) {
+        int total = 0; 
+        int dp[][] = new int[s1.length()][s2.length()];
+        for(int i = 0; i < s1.length() ; i++){
+            total+=s1.charAt(i);
+        }
+        for(int i = 0; i < s2.length() ; i++){
+            total+=s2.charAt(i);
+        }
+        for(int i[] :dp){
+            Arrays.fill(i , -1);
+        }
+        int curr = f(0 , 0 , s1 , s2 ,dp); 
+        return total - curr*2;
     }
 }
