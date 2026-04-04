@@ -1,50 +1,44 @@
 class Solution {
-    class pair{
+    class Node{
         int node; 
         int wt; 
-        pair(int node , int wt ){
+        Node(int node , int wt ){
             this.node = node; 
-            this.wt = wt;
-        }
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) return true;
-            pair temp = (pair)obj;
-            return temp.wt ==wt && temp.node == node;
-        }
-        public int hashCode() {
-            return Objects.hash(node, wt);
+            this.wt = wt; 
         }
     }
     public int networkDelayTime(int[][] times, int n, int k) {
-        int dist[] = new int[n+1];
+        HashMap<Integer , List<Node>> map = new HashMap<>(); 
+        k--;
+        for(int i[] : times ){
+            i[0]--; 
+            i[1]--; 
+            if(map.containsKey(i[0]) == false){
+                map.put(i[0] , new ArrayList<>());
+            }
+            map.get(i[0]).add(new Node(i[1] , i[2]));
+        }
+        int dist[] = new int[n];
         Arrays.fill(dist , (int)1e9);
-        dist[0]=0;
-        HashMap<Integer , ArrayList<pair>> map = new HashMap<>(); 
-        for(int i = 0 ; i<=n ; i++){
-            map.put(i , new ArrayList<>());
-        }
-        for(int i = 0 ; i < times.length ; i++){
-            map.get(times[i][0]).add(new pair(times[i][1] , times[i][2]));
-        }
-        dist[k]=0;
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        pq.offer(k);
+        dist[k] = 0 ; 
+        PriorityQueue<Node> pq = new PriorityQueue<>((a,b)-> a.wt - b.wt);
+        pq.offer(new Node(k , 0 ));
         while(pq.isEmpty()==false){
-            int temp = pq.poll();
-            for(pair p : map.get(temp)){
-                int totalwt = dist[temp] + p.wt;
-                if(dist[p.node] > totalwt){
-                    dist[p.node] = totalwt;
-                    pq.offer(p.node);
+            Node curr = pq.poll(); 
+            for(Node nbr : map.getOrDefault(curr.node, new ArrayList<>())){
+                if(dist[nbr.node] > dist[curr.node] + nbr.wt){
+                    dist[nbr.node] = dist[curr.node] + nbr.wt;
+                    pq.offer(new Node(nbr.node , dist[nbr.node]));
                 }
             }
         }
-        int ans = 0 ;
-        for(int i : dist){
-            System.out.println(i);
-            ans = Math.max(i , ans);
+        int ans = 0;
+        for(int i : dist ){
+            ans = Math.max(i , ans );
         }
-        return ans>(int)1e8?-1: ans;
+        if(ans >= (int)1e8){
+            return -1;
+        }
+        return ans;
     }
 }
