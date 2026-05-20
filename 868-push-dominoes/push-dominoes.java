@@ -18,6 +18,7 @@ class Solution {
         }
         int right[] = new int[dominoes.length()];
         l = -1; 
+        String ans = "";
         for(int i = 0; i<dominoes.length()  ; i++){
             if(dominoes.charAt(i) == 'R'){
                 l = i ; 
@@ -31,10 +32,6 @@ class Solution {
             else{
                 right[i] = i - l ; 
             }
-        }
-        String ans = "";
-        for(int i = 0 ; i < dominoes.length() ; i++){
-            // System.out.println(left[i] + " " +right[i]);
             String curr= ".";
             if(left[i] == -1 && right[i] != -1 ){
                 curr = "R";
@@ -52,6 +49,7 @@ class Solution {
             }
             ans+=curr;
         }
+        
         return ans;
     }
 }
