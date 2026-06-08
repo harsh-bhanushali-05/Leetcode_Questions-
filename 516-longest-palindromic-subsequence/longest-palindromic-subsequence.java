@@ -37,13 +37,8 @@ class Solution {
         System.out.println(ans);
         return dp[0][0];
     }
-    public String reverse(String s){
-        StringBuilder str = new StringBuilder(s);
-        str.reverse(); 
-        return str.toString(); 
-    }
     public int longestPalindromeSubseq(String s) {
         // this is the longest subsequence -> same code with the reverse of that particular string 
-        return longestCommonSubsequence(s , reverse(s));
+        return longestCommonSubsequence(s , new StringBuilder(s).reverse().toString());
     }
 }
