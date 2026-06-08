@@ -11,30 +11,6 @@ class Solution {
                 }
             }
         }
-        // print the longest string as well 
-        String ans = "";
-        int i = dp.length-2; 
-        int j = dp[0].length-2; 
-        while(i >= 0 && j >= 0 ){
-            if(text1.charAt(i) == text2.charAt(j)){
-                ans+=text1.charAt(i);
-                i--; 
-                j--; 
-            }else{
-                if(j == 0 ){
-                    i--; 
-                }
-                else if( i == 0 ){
-                    j--; 
-                }else if(dp[i][j-1] > dp[i-1][j]){
-                    j--; 
-                }else{
-                    i--;
-                }
-            }
-        }
-        // answer is the ulta of the correct answer 
-        System.out.println(ans);
         return dp[0][0];
     }
     public int longestPalindromeSubseq(String s) {
