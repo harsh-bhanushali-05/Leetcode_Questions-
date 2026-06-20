@@ -1,51 +1,31 @@
 class Solution {
-    public int right(int arr[], int target ){
+    public int index(int nums[] , int target ,int direction ){
         int i = 0 ; 
-        int ans = -1;
-        int j = arr.length-1; 
+        int j = nums.length-1; 
+        int ans = -1 ; 
         while(i <= j ){
-            int mid = (j-i)/2+i;
-            if(arr[mid] == target ){
+            int mid = i + (j-i)/2;
+            if(nums[mid] == target ){
                 ans = mid; 
-                i = mid+1; // to give the right most value 
+                if(direction == 1 ){
+                    i = mid+1 ;
+                }else{
+                    j = mid-1; 
+                }
             }
-            else if(arr[mid] < target ){
-                // the answer is in the right half of the array 
+            else if(nums[mid] < target ){
                 i = mid+1;
             }
             else{
-                j = mid-1;
+                j = mid-1; 
             }
         }
-        return ans;
-    }
-    public int left(int arr[] , int target ){
-        int i = 0 ;
-        int ans = -1;
-        int j = arr.length-1; 
-        while(i <= j ){
-            int mid = (j-i)/2+i; 
-            if(arr[mid] == target ){
-                ans = mid;
-                j = mid-1;
-            }
-            else if(arr[mid] < target ){
-                i = mid+1;
-            }
-            else{
-                j = mid-1;
-            }
-        }
-        return ans;
+        return ans; 
     }
     public int[] searchRange(int[] nums, int target) {
-        int arr[] = new int[2];
-        arr[0] = left(nums , target );
-        if(arr[0] == -1 ){
-        arr[1]=-1;
-        return arr;
-        }
-        arr[1] = right(nums , target );
+        int arr[] = new int[2]; 
+        arr[0] = index(nums , target , 0 );
+        arr[1] = index(nums , target , 1 );
         return arr;
     }
 }
