@@ -9,39 +9,31 @@
  * }
  */
 class Solution {
-    public ListNode reverse(ListNode head, ListNode end) {
-        ListNode prev = null;
-        while (head != end) {
-            ListNode next = head.next;
-            head.next = prev;
-            prev = head;
-            head = next;
+    public ListNode  reverse(ListNode head , ListNode limit){
+        ListNode h = head; 
+        ListNode l = limit; 
+        ListNode prev = null; 
+        while(h!=null && h!= limit ){
+            ListNode nxt = h.next; 
+            h.next = prev; 
+            prev = h; 
+            h = nxt; 
         }
         return prev;
     }
-
     public ListNode reverseKGroup(ListNode head, int k) {
-        ListNode dummy = new ListNode(-1);
-        ListNode curr = dummy;
-        dummy.next = head;
-        ListNode start = head;
-        while (true) {
-            ListNode end = start;
-            int count = 0;
-            while (count < k && end != null) {
-                end = end.next;
-                count++;
-            }
-            if (count == k) {
-                curr.next = reverse(start, end);
-                curr = start;
-                start = end;
-            } else {
-                curr.next = start;
-                break;
-            }
+        ListNode kth = head;
+        int temp = k ; 
+        while(kth != null && temp > 0){
+            kth = kth.next; 
+            temp--;
         }
-
-        return dummy.next;
+        if(temp != 0 ){
+            System.out.println("WHY?");
+            return head; 
+        }
+        ListNode ret = reverse(head , kth ); 
+        head.next = reverseKGroup(kth , k );
+        return ret; 
     }
 }
