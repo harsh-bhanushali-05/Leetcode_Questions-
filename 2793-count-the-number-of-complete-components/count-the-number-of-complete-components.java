@@ -12,11 +12,9 @@ class Solution {
         return map; 
     }
     public boolean isSame(List<Integer> a , List<Integer> b ){
-        // Quick size check first for performance
         if (a.size() != b.size()) {
             return true;
         }
-        // Use HashSets to compare elements without worrying about order
         HashSet<Integer> setA = new HashSet<>(a);
         HashSet<Integer> setB = new HashSet<>(b);
         return !setA.equals(setB); 
